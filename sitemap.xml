@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+    
+    <!-- Homepage -->
+    <url>
+        <loc>https://www.universocentroautomotivo.com.br/</loc>
+        <lastmod>2025-12-02</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <image:image>
+            <image:loc>https://www.universocentroautomotivo.com.br/assets/images/logo.png</image:loc>
+            <image:title>Universo Centro Automotivo - Oficina Mecânica em Brasília</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.universocentroautomotivo.com.br/assets/images/hero-bg.png</image:loc>
+            <image:title>Oficina Mecânica Especializada em Brasília</image:title>
+        </image:image>
+    </url>
+    
+    <!-- Seção de Serviços -->
+    <url>
+        <loc>https://www.universocentroautomotivo.com.br/#servicos</loc>
+        <lastmod>2025-12-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <!-- Seção Sobre -->
+    <url>
+        <loc>https://www.universocentroautomotivo.com.br/#sobre</loc>
+        <lastmod>2025-12-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Seção de Contato -->
+    <url>
+        <loc>https://www.universocentroautomotivo.com.br/#contato</loc>
+        <lastmod>2025-12-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Seção Agendamento -->
+    <url>
+        <loc>https://www.universocentroautomotivo.com.br/#agendar</loc>
+        <lastmod>2025-12-02</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+</urlset>

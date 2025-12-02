@@ -1,0 +1,21 @@
+# robots.txt - Universo Centro Automotivo
+
+# Permitir todos os crawlers
+User-agent: *
+Allow: /
+
+# Bloquear arquivos desnecessários
+Disallow: /assets/
+Disallow: /*.css$
+Disallow: /*.js$
+
+# Permitir imagens para Google Images
+User-agent: Googlebot-Image
+Allow: /assets/images/
+
+# Sitemap
+Sitemap: https://www.universocentroautomotivo.com.br/sitemap.xml
+
+# Crawl-delay para bots agressivos
+User-agent: *
+Crawl-delay: 1
