@@ -213,6 +213,8 @@ ul {
     background: none;
     border: none;
     cursor: pointer;
+    padding: 5px;
+    z-index: 1001;
 }
 
 .bar {
@@ -222,6 +224,18 @@ ul {
     background-color: var(--color-text);
     margin: 5px 0;
     transition: var(--transition);
+}
+
+.mobile-menu-btn.active .bar:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.mobile-menu-btn.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-btn.active .bar:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
 }
 
 /* Hero Carousel Section */
@@ -237,18 +251,20 @@ ul {
 .hero-carousel__container {
     height: 100%;
     position: relative;
+    display: grid;
+    grid-template-areas: "stack";
 }
 
 .hero-slide {
-    position: absolute;
-    top: 0;
-    left: 0;
+    grid-area: stack;
     width: 100%;
     height: 100%;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.8s ease-in-out, visibility 0.8s;
     z-index: 1;
+    /* Remove absolute positioning */
+    position: relative;
 }
 
 .hero-slide.active {
@@ -378,10 +394,10 @@ ul {
 }
 
 /* Responsive Hero */
-@media (max-width: 992px) {
+@media (max-width: 999px) {
     .hero-carousel {
         height: auto;
-        min-height: 600px;
+        min-height: 500px;
     }
 
     .hero-slide__content {
@@ -390,20 +406,44 @@ ul {
 
     .hero-slide__text-col {
         width: 100%;
-        height: 50%;
+        height: auto;
+        min-height: 300px;
         padding: var(--spacing-lg) var(--spacing-md);
         text-align: center;
         align-items: center;
+        display: flex;
+        justify-content: center;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.95) 100%);
+        position: relative;
     }
 
     .hero-slide__image-col {
         width: 100%;
         height: 300px;
-        /* Fixed height for image on mobile */
+        position: relative;
+        background-position: top center !important;
     }
 
+    /* Specific fix for the 3rd slide */
+    .hero-slide:nth-child(3) .hero-slide__image-col {
+        background-position: top center !important;
+    }
+
+    /* Removed gradient overlay as requested */
+
     .hero-slide__title {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-slide__subtitle {
+        max-width: 100%;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-slide__actions {
+        justify-content: center;
+        flex-wrap: wrap;
     }
 
     .hero-carousel__controls {
@@ -414,7 +454,6 @@ ul {
 
     .carousel-arrow {
         display: none;
-        /* Hide arrows on mobile for cleaner UI, rely on swipe or dots */
     }
 }
 
@@ -427,6 +466,59 @@ ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: var(--spacing-md);
+}
+
+@media (max-width: 992px) {
+    .services__grid {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: var(--spacing-sm);
+        padding-bottom: var(--spacing-md);
+        /* Space for scrollbar/shadow */
+        -webkit-overflow-scrolling: touch;
+        /* Smooth scrolling on iOS */
+        scrollbar-width: none;
+        /* Hide scrollbar Firefox */
+    }
+
+    .services__grid::-webkit-scrollbar {
+        display: none;
+        /* Hide scrollbar Chrome/Safari */
+    }
+
+    .services__grid .service-card {
+        flex: 0 0 85%;
+        /* Show 85% of the card */
+        scroll-snap-align: center;
+        margin-right: 0;
+    }
+
+    /* Ensure the first card has some left margin/padding equivalent so it's not flush */
+    .services__grid::before,
+    .services__grid::after {
+        content: '';
+        flex: 0 0 var(--spacing-xs);
+    }
+}
+
+@media (min-width: 993px) {
+    .hidden-desktop {
+        display: none !important;
+    }
+}
+
+.load-more-container {
+    text-align: center;
+    margin-top: var(--spacing-lg);
+    display: none;
+    /* Hidden by default, shown by JS if needed */
+}
+
+@media (min-width: 993px) {
+    .load-more-container {
+        display: block;
+    }
 }
 
 .service-card {
@@ -484,6 +576,18 @@ ul {
     margin-bottom: var(--spacing-md);
     line-height: 1.5;
     flex-grow: 1;
+}
+
+.service-card__icon {
+    width: 60px;
+    height: 60px;
+    background-color: var(--color-bg-alt);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-sm);
 }
 
 .service-card__actions {
@@ -593,6 +697,10 @@ ul {
     .benefits__cards-col {
         width: 100%;
         flex: auto;
+    }
+
+    .benefits__description p:not(:first-of-type) {
+        display: none;
     }
 }
 
@@ -797,22 +905,412 @@ ul {
     margin-top: var(--spacing-lg);
 }
 
-/* Responsive */
+/* Responsive Styles */
+
+/* Tablet and below (992px) - Already defined above for specific sections */
+
+/* Tablet (768px and below) */
 @media (max-width: 768px) {
+
+    /* Typography adjustments */
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .section-subtitle {
+        font-size: 1rem;
+    }
+
+    /* Header */
+    .header {
+        height: 70px;
+    }
+
+    :root {
+        --header-height: 70px;
+    }
+
+    .logo__image {
+        height: 50px;
+    }
+
     .nav {
-        display: none;
-        /* Simple hide for now, will implement mobile menu in JS */
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 70px);
+        background-color: var(--color-white);
+        flex-direction: column;
+        padding: var(--spacing-md);
+        box-shadow: var(--shadow);
+        transition: left 0.3s ease;
+        z-index: 999;
+    }
+
+    .nav.active {
+        left: 0;
+    }
+
+    .nav__list {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        width: 100%;
+    }
+
+    .nav__item {
+        width: 100%;
+    }
+
+    .nav__link {
+        display: block;
+        padding: var(--spacing-sm);
+        border-bottom: 1px solid var(--color-border);
+        font-size: 1.1rem;
     }
 
     .mobile-menu-btn {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+    }
+
+    .header__container .btn {
+        display: none;
+    }
+
+    /* Hero */
+    .hero-carousel {
+        height: auto;
+        min-height: 450px;
+    }
+
+    .hero-slide__text-col {
+        min-height: 280px;
+        padding: var(--spacing-md);
+    }
+
+    .hero-slide__image-col {
+        height: 250px;
+    }
+
+    .hero-slide__title {
+        font-size: 1.8rem;
+        line-height: 1.2;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .hero-slide__subtitle {
+        font-size: 1rem;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .hero-slide__actions {
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        gap: var(--spacing-sm);
+    }
+
+    .hero-slide__actions .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    /* Services */
+    .services__grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+
+    .service-card__image {
+        height: 180px;
+    }
+
+    /* Benefits */
+    .benefits__card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .benefits__card .service-card__icon {
+        margin: 0 auto var(--spacing-xs);
+    }
+
+    /* CTA */
+    .cta__title {
+        font-size: 2rem;
+    }
+
+    .cta__text {
+        font-size: 1rem;
+    }
+
+    .cta__actions {
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .cta__btn {
+        width: 100%;
+    }
+
+    /* Footer */
+    .footer__container {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .footer__col {
+        text-align: center;
+    }
+
+    .footer__subtitle {
         display: block;
     }
+}
 
-    .hero__title {
-        font-size: 2.5rem;
+/* Mobile (480px and below) */
+@media (max-width: 480px) {
+
+    /* Base spacing adjustments */
+    :root {
+        --spacing-xs: 0.4rem;
+        --spacing-sm: 0.75rem;
+        --spacing-md: 1.5rem;
+        --spacing-lg: 3rem;
+        --spacing-xl: 4rem;
     }
 
-    .hero__actions {
-        flex-direction: column;
+    .container {
+        padding: 0 var(--spacing-sm);
+    }
+
+    .section {
+        padding: var(--spacing-lg) 0;
+    }
+
+    /* Typography */
+    .section-title {
+        font-size: 1.75rem;
+        line-height: 1.2;
+    }
+
+    .section-subtitle {
+        font-size: 0.95rem;
+    }
+
+    /* Header */
+    .header {
+        height: 60px;
+    }
+
+    :root {
+        --header-height: 60px;
+    }
+
+    .logo__image {
+        height: 40px;
+    }
+
+    .nav {
+        top: 60px;
+        height: calc(100vh - 60px);
+    }
+
+    /* Buttons */
+    .btn {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.95rem;
+    }
+
+    .btn--large {
+        padding: 0.9rem 1.5rem;
+        font-size: 1rem;
+    }
+
+    /* Hero */
+    .hero-carousel {
+        min-height: 400px;
+    }
+
+    .hero-slide__text-col {
+        padding: var(--spacing-md) var(--spacing-sm);
+        min-height: 250px;
+    }
+
+    .hero-slide__title {
+        font-size: 1.5rem;
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .hero-slide__subtitle {
+        font-size: 0.9rem;
+        margin-bottom: var(--spacing-sm);
+        line-height: 1.4;
+    }
+
+    .hero-slide__image-col {
+        height: 200px;
+    }
+
+    .hero-slide__actions .btn {
+        width: 100%;
+        max-width: 100%;
+        padding: 0.8rem 1rem;
+    }
+
+    .carousel-arrow {
+        width: 40px;
+        height: 40px;
+    }
+
+    .carousel-arrow.prev {
+        left: 10px;
+    }
+
+    .carousel-arrow.next {
+        right: 10px;
+    }
+
+    .hero-carousel__controls {
+        bottom: 15px;
+    }
+
+    .carousel-dot {
+        width: 10px;
+        height: 10px;
+    }
+
+    /* Services */
+    .service-card__image {
+        height: 150px;
+    }
+
+    .service-card__content {
+        padding: var(--spacing-sm);
+    }
+
+    .service-card__title {
+        font-size: 1.1rem;
+    }
+
+    .service-card__desc {
+        font-size: 0.9rem;
+    }
+
+    /* Benefits */
+    .benefits__description p {
+        font-size: 1rem;
+    }
+
+    .benefits__card {
+        padding: var(--spacing-sm);
+    }
+
+    .benefits__card .service-card__icon {
+        width: 45px;
+        height: 45px;
+        padding: 8px;
+    }
+
+    .benefits__card .service-card__title {
+        font-size: 1rem;
+    }
+
+    .benefits__card .service-card__desc {
+        font-size: 0.85rem;
+    }
+
+    /* CTA */
+    .cta {
+        padding: var(--spacing-lg) 0;
+    }
+
+    .cta__title {
+        font-size: 1.6rem;
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .cta__text {
+        font-size: 0.95rem;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .cta__info-card {
+        padding: var(--spacing-md);
+    }
+
+    .cta__info-title {
+        font-size: 1.1rem;
+    }
+
+    .cta__info-item {
+        font-size: 0.9rem;
+    }
+
+    .cta__icon-box {
+        padding: 6px;
+    }
+
+    /* Footer */
+    .footer {
+        padding: var(--spacing-md) 0 0;
+    }
+
+    .footer__title {
+        font-size: 1.3rem;
+    }
+
+    .footer__subtitle {
+        font-size: 1.1rem;
+    }
+
+    .footer__col p {
+        font-size: 0.9rem;
+    }
+
+    .footer__bottom {
+        padding: 15px 0;
+        font-size: 0.85rem;
+    }
+}
+
+/* Extra small devices (360px and below) */
+@media (max-width: 360px) {
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .hero-slide__title {
+        font-size: 1.4rem;
+    }
+
+    .cta__title {
+        font-size: 1.4rem;
+    }
+
+    .btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Landscape orientation adjustments for mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero-carousel {
+        min-height: 400px;
+    }
+
+    .hero-slide__image-col {
+        height: 200px;
+    }
+
+    .hero-slide__title {
+        font-size: 1.8rem;
+    }
+
+    .hero-slide__subtitle {
+        font-size: 0.95rem;
     }
 }
