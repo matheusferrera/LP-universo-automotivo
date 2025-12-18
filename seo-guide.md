@@ -399,7 +399,7 @@ Quando o site estiver no ar, certifique-se de que a URL canônica está correta:
 
 ### Imagens Necessárias
 
-1. **Open Graph Image** (og-image.jpg)
+1. **Open Graph Image** (og-image-bg.jpg)
    - Dimensões: 1200x630px
    - Formato: JPG ou PNG
    - Conteúdo: Logo + slogan + foto da oficina
