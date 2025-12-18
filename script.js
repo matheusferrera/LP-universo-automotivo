@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Hero Carousel Logic
     const slides = document.querySelectorAll('.hero-slide');
     const dots = document.querySelectorAll('.carousel-dot');
+    const carouselContainer = document.querySelector('.hero-carousel__container');
     let currentSlide = 0;
     const slideInterval = 5000; // 5 seconds
 
@@ -102,6 +103,52 @@ document.addEventListener('DOMContentLoaded', () => {
             resetTimer();
             nextSlide();
         });
+    }
+
+    // Touch/Swipe Support for Mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let touchStartY = 0;
+    let touchEndY = 0;
+    let isDragging = false;
+
+    if (carouselContainer) {
+        carouselContainer.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+            isDragging = true;
+        }, { passive: true });
+
+        carouselContainer.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
+        }, { passive: true });
+
+        carouselContainer.addEventListener('touchend', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50; // Minimum distance for a swipe
+            const horizontalSwipe = Math.abs(touchEndX - touchStartX);
+            const verticalSwipe = Math.abs(touchEndY - touchStartY);
+
+            // Only trigger if horizontal swipe is greater than vertical (to avoid interfering with scroll)
+            if (horizontalSwipe > verticalSwipe && horizontalSwipe > swipeThreshold) {
+                if (touchEndX < touchStartX) {
+                    // Swiped left - go to next slide
+                    resetTimer();
+                    nextSlide();
+                } else if (touchEndX > touchStartX) {
+                    // Swiped right - go to previous slide
+                    resetTimer();
+                    prevSlide();
+                }
+            }
+        }
     }
 
     // Load More Services Logic (Desktop)
